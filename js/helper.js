@@ -50,6 +50,7 @@ var HTMLschoolLocation = '<div class="location-text">%data%</div>';
 var HTMLschoolMajor = '<em><br>Major: %data%</em>';
 
 var HTMLonlineClasses = '<h3>Online Classes</h3>';
+var HTMLonlineStart = '<div class="onlinecourse-entry"></div>';
 var HTMLonlineTitle = '<a href="#">%data%';
 var HTMLonlineSchool = ' - %data%</a>';
 var HTMLonlineDates = '<div class="date-text">%data%</div>';
@@ -64,10 +65,13 @@ The International Name challenge in Lesson 2 where you'll create a function that
 */
 $(document).ready(function() {
   $('button').click(function() {
-    var iName = inName() || function(){};
+    console.log(name);
+    var nameValue = document.getElementById("name").childNodes[0].nodeValue;
+    console.log(nameValue);
+    var iName = inName(nameValue) || function(){};
     $('#name').html(iName);  
   });
-});
+})
 
 /*
 The next few lines about clicks are for the Collecting Click Locations quiz in Lesson 2.
@@ -85,7 +89,8 @@ function logClicks(x,y) {
 }
 
 $(document).click(function(loc) {
-  // your code goes here!
+
+  logClicks(loc.pageX, loc.pageY);
 });
 
 
@@ -108,6 +113,8 @@ function initializeMap() {
   var mapOptions = {
     disableDefaultUI: true
   };
+
+  console.log("initializeMap function called Terrell");
 
   // This next line makes `map` a new Google Map JavaScript Object and attaches it to
   // <div id="map">, which is appended as part of an exercise late in the course.
@@ -233,11 +240,17 @@ Uncomment the code below when you're ready to implement a Google Map!
 */
 
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+if(window.addEventListener){
+    window.addEventListener('load',initializeMap,false); //W3C
+}
+else{
+    window.attachEvent('onload',initializeMap); //IE
+}
+
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
-//window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function(e) {
   // Make sure the map bounds get updated on page resize
-//  map.fitBounds(mapBounds);
-//});
+  map.fitBounds(mapBounds);
+});
